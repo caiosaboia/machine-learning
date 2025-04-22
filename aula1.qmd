@@ -1,0 +1,55 @@
+---
+# title: "title"
+# subtitle: " subtitulo"
+# author: "seu nome"
+# date: "dd/mm/aaaa" #if necessary
+format:
+  html:
+    toc: false
+    number-sections: true
+    # toc-location: right-body
+    code-fold: false
+    # css: styles.css #if necessary
+    math: mathjax
+
+  pdf:
+    number-sections: true
+    toc: true
+    keep_tex: true
+
+latex-engine: xelatex
+
+header-includes:
+  - \usepackage{amsmath}
+  - \usepackage{amsfonts}
+  - \usepackage{amssymb}
+  - \usepackage{listings}
+
+execute:
+  cache: true
+  enabled: true
+  freeze: true #can be use 'false' or auto
+  # daemon: false #default is 300, but can use boleean values too 
+
+#python
+jupyter: python3 #can be use for Julia too
+  # or can be use something like this:
+  # kernelspec:
+  #   name: "xpython"
+  #   language: "python"
+  #   display_name: "Python 3.7 (XPython)"
+
+#R
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: ">>"
+    R.options:
+      knitr.graphics.auto_pdf: true
+
+# engine: julia # for more aplicatoins use quarto.org or :QuartoHelp Julia
+---
+
+
+
+

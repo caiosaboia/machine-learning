@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.43">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introdução ao numpy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="AulaNumpy_alunos_files/libs/clipboard/clipboard.min.js"></script>
+<script src="AulaNumpy_alunos_files/libs/quarto-html/quarto.js"></script>
+<script src="AulaNumpy_alunos_files/libs/quarto-html/popper.min.js"></script>
+<script src="AulaNumpy_alunos_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="AulaNumpy_alunos_files/libs/quarto-html/anchor.min.js"></script>
+<link href="AulaNumpy_alunos_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="AulaNumpy_alunos_files/libs/quarto-html/quarto-syntax-highlighting-d4d76bf8491c20bad77d141916dc28e1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="AulaNumpy_alunos_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="AulaNumpy_alunos_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="AulaNumpy_alunos_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introdução ao <code>numpy</code></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="4ce6506d" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  <span class="co"># Biblioteca para gerar gráficos</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Vamos criar umas matrizes e vetores para começar…</p>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\ &amp;
+\boldsymbol{B} &amp;= \begin{bmatrix}1 &amp; 3\\ 5 &amp; 7\end{bmatrix}\\\\
+\boldsymbol{v}_1 &amp;= \begin{bmatrix}5 &amp; 3\end{bmatrix}\ &amp;
+\boldsymbol{v}_2 &amp;= \begin{bmatrix}9 &amp; 2 &amp; 1\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="28ebbcb4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">2</span>,<span class="dv">0</span>],[<span class="dv">4</span>,<span class="dv">6</span>],[<span class="dv">8</span>,<span class="dv">2</span>]])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>B <span class="op">=</span> np.array([[<span class="dv">1</span>,<span class="dv">3</span>],[<span class="dv">5</span>,<span class="dv">7</span>]])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> np.array([<span class="dv">5</span>,<span class="dv">3</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> np.array([<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5f927751" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dimensão de A:"</span>, A.shape)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dimensão de B:"</span>, B.shape)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dimensão de v1:"</span>, v1.shape)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dimensão de v2:"</span>, v1.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dimensão de A: (3, 2)
+Dimensão de B: (2, 2)
+Dimensão de v1: (2,)
+Dimensão de v2: (2,)</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\boldsymbol{A}^{\top} &amp;= \begin{bmatrix}2 &amp; 4 &amp; 8\\ 0 &amp; 6 &amp; 2\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="a52f50ab" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz original:"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz transposta:"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A.T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz original:
+[[2 0]
+ [4 6]
+ [8 2]]
+Matriz transposta:
+[[2 4 8]
+ [0 6 2]]</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A}[0] &amp;= \begin{bmatrix}2 &amp; 0\end{bmatrix}\\
+\boldsymbol{A}[[0,2]] &amp;= \begin{bmatrix}2 &amp; 0\\ 8 &amp; 2\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="ee69a85d" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira linha de A:"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[<span class="dv">0</span>], <span class="st">"dimensão:"</span>, A[<span class="dv">0</span>].shape) <span class="co"># Primeira linha de A</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira e terceira linha de A:"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[[<span class="dv">0</span>,<span class="dv">2</span>]], <span class="st">"dimensão:"</span>, A[[<span class="dv">0</span>,<span class="dv">2</span>]].shape) <span class="co"># Primeira e terceira linha de A</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira linha de A (mantendo 2 dimensões):"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[[<span class="dv">0</span>]], <span class="st">"dimensão:"</span>, A[[<span class="dv">0</span>]].shape) <span class="co"># Primeira linha de A (mantendo 2 dimensões)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Primeira linha de A:
+[2 0] dimensão: (2,)
+Primeira e terceira linha de A:
+[[2 0]
+ [8 2]] dimensão: (2, 2)
+Primeira linha de A (mantendo 2 dimensões):
+[[2 0]] dimensão: (1, 2)</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A}[:,0] &amp;= \begin{bmatrix}2 &amp; 4 &amp; 8\end{bmatrix}\\
+\boldsymbol{A}[:,[0]] &amp;= \begin{bmatrix}2 \\ 4 \\ 8\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="4ed75dfc" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira coluna do A:"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[:,<span class="dv">0</span>], <span class="st">"dimensão:"</span>, A[:,<span class="dv">0</span>].shape) <span class="co"># Primeira coluna do A</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira e segunda coluna do A:"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[:,[<span class="dv">0</span>,<span class="dv">1</span>]], <span class="st">"dimensão:"</span>, A[:,[<span class="dv">0</span>,<span class="dv">1</span>]].shape) <span class="co"># Primeira e segunda coluna do A</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Primeira coluna do A (mantendo 2 dimensões):"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A[:,[<span class="dv">0</span>]], <span class="st">"dimensão:"</span>, A[:,[<span class="dv">0</span>]].shape) <span class="co"># Primeira coluna do A (mantendo 2 dimensões)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Primeira coluna do A:
+[2 4 8] dimensão: (3,)
+Primeira e segunda coluna do A:
+[[2 0]
+ [4 6]
+ [8 2]] dimensão: (3, 2)
+Primeira coluna do A (mantendo 2 dimensões):
+[[2]
+ [4]
+ [8]] dimensão: (3, 1)</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\left[\begin{bmatrix}2 &amp; 4 &amp; 8\end{bmatrix}; \begin{bmatrix}1 &amp; 2 &amp; 3\end{bmatrix}\right] &amp;= \begin{bmatrix}2 &amp; 4 &amp; 8\\1 &amp; 2 &amp; 3\end{bmatrix}\\
+\left[\begin{bmatrix}2 \\ 4 \\ 8\end{bmatrix}, \begin{bmatrix}1 \\ 2 \\ 3\end{bmatrix}\right] &amp;= \begin{bmatrix}2 &amp; 1 \\ 4 &amp; 2 \\ 8 &amp; 3\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="18f6f81e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>]).reshape((<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]).reshape((<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ab <span class="op">=</span> np.r_[a,b]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">"dimensão:"</span>, a.shape)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b, <span class="st">"dimensão:"</span>, b.shape)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ab, <span class="st">"dimensão:"</span>, ab.shape) <span class="co"># row stack</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[2 4 8]] dimensão: (1, 3)
+[[1 2 3]] dimensão: (1, 3)
+[[2 4 8]
+ [1 2 3]] dimensão: (2, 3)</code></pre>
+</div>
+</div>
+<div id="c2d2e344" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>]).reshape((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]).reshape((<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>cd <span class="op">=</span> np.c_[c,d]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c, <span class="st">"dimensão:"</span>, c.shape)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(d, <span class="st">"dimensão:"</span>, d.shape)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cd, <span class="st">"dimensão:"</span>, cd.shape) <span class="co"># column stack</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[2]
+ [4]
+ [8]] dimensão: (3, 1)
+[[1]
+ [2]
+ [3]] dimensão: (3, 1)
+[[2 1]
+ [4 2]
+ [8 3]] dimensão: (3, 2)</code></pre>
+</div>
+</div>
+<section id="matrizes-notáveis" class="level2">
+<h2 class="anchored" data-anchor-id="matrizes-notáveis">Matrizes notáveis</h2>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{I}_n = \mathtt{np.eye(n)} &amp;= \begin{bmatrix}1 &amp; 0 &amp; \ldots\\ 0 &amp; 1 &amp; \ldots\\ \vdots&amp;\vdots&amp;\vdots\\ 0 &amp; \ldots &amp; 1\end{bmatrix}&amp;
+\boldsymbol{0}_{n,m} = \mathtt{np.zeros((n,m))} &amp;= \begin{bmatrix}0 &amp; 0 &amp; \ldots\\ 0 &amp; 0 &amp; \ldots\\ \vdots&amp;\vdots&amp;\vdots\\ 0 &amp; \ldots &amp; 0\end{bmatrix}\\
+\boldsymbol{1}_{n,m} = \mathtt{np.ones((n,m))} &amp;= \begin{bmatrix}1 &amp; 1 &amp; \ldots\\ 1 &amp; 1 &amp; \ldots\\ \vdots&amp;\vdots&amp;\vdots\\ 1 &amp; \ldots &amp; 1\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="42af3388" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz identidade de ordem 5:"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.eye(<span class="dv">5</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz de zeros 5x3:"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.zeros((<span class="dv">5</span>,<span class="dv">3</span>)))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz de uns 3x1:"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.ones((<span class="dv">3</span>,<span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz identidade de ordem 5:
+[[1. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1.]]
+Matriz de zeros 5x3:
+[[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+Matriz de uns 3x1:
+[[1.]
+ [1.]
+ [1.]]</code></pre>
+</div>
+</div>
+<p>Além dessas matrizes notáveis, também podemos fazer matrizes aleatórias:</p>
+<p><code>np.random.rand(n,m)</code> é uma matrix <span class="math inline">\(n\)</span> por <span class="math inline">\(m\)</span> onde <span class="math inline">\([\mathtt{np.random.rand(n,m)}]_{ij} \sim \mathcal{U}(0,1)\)</span>.</p>
+<p>Ou seja, <span class="math inline">\([\mathtt{np.random.rand(n,m)}]_{ij} \in [0,1)\)</span></p>
+<p><code>np.random.randn(n,m)</code> é uma matrix <span class="math inline">\(n\)</span> por <span class="math inline">\(m\)</span> onde <span class="math inline">\([\mathtt{np.random.randn(n,m)}]_{ij} \sim \mathcal{N}(0,1)\)</span></p>
+<p>Ou seja, <span class="math inline">\([\mathtt{np.random.randn(n,m)}]_{ij} \in (-\infty,+\infty)\)</span></p>
+<div id="67670a41" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz 5x3 de números aleatórios amostrados de U(0,1):"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.random.rand(<span class="dv">5</span>,<span class="dv">3</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz 2x2 de números aleatórios amostrados de N(0,1):"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.random.randn(<span class="dv">2</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz 5x3 de números aleatórios amostrados de U(0,1):
+[[0.48797055 0.57508353 0.90600202]
+ [0.72914293 0.65276921 0.99575474]
+ [0.96543714 0.70395873 0.56665554]
+ [0.94648808 0.95827907 0.88969207]
+ [0.1169647  0.82712339 0.93748704]]
+Matriz 2x2 de números aleatórios amostrados de N(0,1):
+[[ 0.43460562 -1.90458233]
+ [-1.42753961  0.39893875]]</code></pre>
+</div>
+</div>
+</section>
+<section id="operações-lineares" class="level2">
+<h2 class="anchored" data-anchor-id="operações-lineares">Operações lineares</h2>
+<p>Produto de escalares por matrizes: <span class="math display">\[\begin{aligned}
+5\boldsymbol{A} &amp;= \begin{bmatrix}2\cdot 5 &amp; 0\cdot 5\\ 4\cdot 5 &amp; 6\cdot 5\\ 8\cdot 5 &amp; 2\cdot 5\end{bmatrix}\\[0.3em]
+&amp;= \begin{bmatrix}10 &amp; 0\\ 20 &amp; 30\\ 40 &amp; 10\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="3e8ac250" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">5</span> <span class="op">*</span> A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[10  0]
+ [20 30]
+ [40 10]]</code></pre>
+</div>
+</div>
+<p>Soma de matrizes: <span class="math display">\[\begin{aligned}
+\boldsymbol{A}+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}+\begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\[0.3em]
+&amp;= \begin{bmatrix}4 &amp; 0\\ 8 &amp; 12\\ 26 &amp; 4\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="cbd7ad15" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A <span class="op">+</span> A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 4  0]
+ [ 8 12]
+ [16  4]]</code></pre>
+</div>
+</div>
+<p>Produto com broadcast (difusão) de um vetor por uma matriz: <span class="math display">\[\begin{aligned}
+\boldsymbol{v}_1 \bullet \boldsymbol{A} &amp;= \begin{bmatrix}5 &amp; 3\end{bmatrix}\bullet\begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\[0.3em]
+&amp;= \begin{bmatrix}5\cdot 2 &amp; 3\cdot 0\\ 5\cdot 4 &amp; 3\cdot 6\\ 5\cdot 8 &amp; 3\cdot 2\end{bmatrix}\\
+&amp;= \begin{bmatrix}10 &amp; 0\\ 20 &amp; 18\\ 40 &amp; 6\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="3d03d7ba" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(v1 <span class="op">*</span> A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[10  0]
+ [20 18]
+ [40  6]]</code></pre>
+</div>
+</div>
+<p>Soma com broadcast (difusão) de um vetor por uma matriz: <span class="math display">\[\begin{aligned}
+\boldsymbol{v}_1 \oplus \boldsymbol{A} &amp;= \begin{bmatrix}5 &amp; 3\end{bmatrix}\oplus\begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\[0.3em]
+&amp;= \begin{bmatrix}5 &amp; 3\\ 5 &amp; 3\\ 5 &amp; 3\end{bmatrix}+\begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+&amp;= \begin{bmatrix}7 &amp; 3\\ 9 &amp; 9\\ 13 &amp; 5\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="875913d2" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(v1 <span class="op">+</span> A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 7  3]
+ [ 9  9]
+ [13  5]]</code></pre>
+</div>
+</div>
+<p>Cuidado com as dimensões das variáveis:</p>
+<div id="b41ba922" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Vetor v2:"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(v2, <span class="st">"dimensão:"</span>, v2.shape)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz A:"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A, <span class="st">"dimensão:"</span>, A.shape)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    v2 <span class="op">+</span> A</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Vetor v2:
+[9 2 1] dimensão: (3,)
+Matriz A:
+[[2 0]
+ [4 6]
+ [8 2]] dimensão: (3, 2)
+operands could not be broadcast together with shapes (3,) (3,2) </code></pre>
+</div>
+</div>
+<div id="7bf8549c" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz A:"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A, <span class="st">"dimensão:"</span>, A.shape)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matriz B:"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B, <span class="st">"dimensão:"</span>, B.shape)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    A <span class="op">+</span> B</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Matriz A:
+[[2 0]
+ [4 6]
+ [8 2]] dimensão: (3, 2)
+Matriz B:
+[[1 3]
+ [5 7]] dimensão: (2, 2)
+operands could not be broadcast together with shapes (3,2) (2,2) </code></pre>
+</div>
+</div>
+</section>
+<section id="operações-não-lineares" class="level2">
+<h2 class="anchored" data-anchor-id="operações-não-lineares">Operações não-lineares</h2>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\mathtt{A ** 2} &amp;= \begin{bmatrix}2^2 &amp; 0^2\\ 4^2 &amp; 6^2\\ 8^2 &amp; 2^2\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="a74b1751" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A <span class="op">**</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 4  0]
+ [16 36]
+ [64  4]]</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\mathtt{np.sqrt(A)} &amp;= \begin{bmatrix}\sqrt{2} &amp; \sqrt{0}\\ \sqrt{4} &amp; \sqrt{6}\\ \sqrt{8} &amp; \sqrt{2}\end{bmatrix}\\
+\mathtt{A ** 0.5} &amp;= \begin{bmatrix}2^\frac{1}{2} &amp; 0^\frac{1}{2}\\ 4^\frac{1}{2} &amp; 6^\frac{1}{2}\\ 8^\frac{1}{2} &amp; 2^\frac{1}{2}\end{bmatrix}
+\end{aligned}\]</span></p>
+<div id="bd69c5f1" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.sqrt(A))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A <span class="op">**</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.41421356 0.        ]
+ [2.         2.44948974]
+ [2.82842712 1.41421356]]
+[[1.41421356 0.        ]
+ [2.         2.44948974]
+ [2.82842712 1.41421356]]</code></pre>
+</div>
+</div>
+</section>
+<section id="operações-de-agregação" class="level2">
+<h2 class="anchored" data-anchor-id="operações-de-agregação">Operações de agregação</h2>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\mathtt{np.mean(A)} &amp;= \frac{2 + 0 + 4 + 6 + 8 + 2}{2\cdot 3}\\
+\mathtt{np.sum(A)} &amp;= 2 + 0 + 4 + 6 + 8 + 2\\
+\mathtt{np.prod(A)} &amp;= 2 \cdot 0 \cdot 4 \cdot 6 \cdot 8 \cdot 2\\
+\end{aligned}\]</span></p>
+<div id="e1e3b4c6" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>np.mean(A), np.<span class="bu">sum</span>(A), np.prod(A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="226">
+<pre><code>(np.float64(3.6666666666666665), np.int64(22), np.int64(0))</code></pre>
+</div>
+</div>
+<div id="4ba20f2c" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>A.mean(), A.<span class="bu">sum</span>(), A.prod()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="227">
+<pre><code>(np.float64(3.6666666666666665), np.int64(22), np.int64(0))</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\mathtt{np.mean(A, axis=0)} &amp;= \frac{1}{3}\begin{bmatrix}2 + 4 + 8 &amp; 0 + 6 + 2\end{bmatrix}\\
+\mathtt{np.sum(A, axis=0)} &amp;= \begin{bmatrix}2 + 4 + 8 &amp; 0 + 6 + 2\end{bmatrix}\\
+\mathtt{np.prod(A, axis=0)} &amp;= \begin{bmatrix}2 \cdot 4 \cdot 8 &amp; 0 \cdot 6 \cdot 2\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="ed416450" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>np.mean(A, axis<span class="op">=</span><span class="dv">0</span>), np.<span class="bu">sum</span>(A, axis<span class="op">=</span><span class="dv">0</span>), np.prod(A, axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="228">
+<pre><code>(array([4.66666667, 2.66666667]), array([14,  8]), array([64,  0]))</code></pre>
+</div>
+</div>
+<div id="6512ce75" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>A.mean(axis<span class="op">=</span><span class="dv">0</span>), A.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), A.prod(axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="229">
+<pre><code>(array([4.66666667, 2.66666667]), array([14,  8]), array([64,  0]))</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{aligned}
+\boldsymbol{A} &amp;= \begin{bmatrix}2 &amp; 0\\ 4 &amp; 6\\ 8 &amp; 2\end{bmatrix}\\
+\mathtt{np.mean(A, axis=1)} &amp;= \frac{1}{2}\begin{bmatrix}2 + 0 &amp; 4 + 6 &amp; 8 + 2\end{bmatrix}\\
+\mathtt{np.sum(A, axis=1)} &amp;= \begin{bmatrix}2 + 0 &amp; 4 + 6 &amp; 8 + 2\end{bmatrix}\\
+\mathtt{np.prod(A, axis=1)} &amp;= \begin{bmatrix}2 \cdot 0 &amp; 4 \cdot 6 &amp; 8 \cdot 2\end{bmatrix}\\
+\end{aligned}\]</span></p>
+<div id="8cbe38a9" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>np.mean(A, axis<span class="op">=</span><span class="dv">1</span>), np.<span class="bu">sum</span>(A, axis<span class="op">=</span><span class="dv">1</span>), np.prod(A, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="230">
+<pre><code>(array([1., 5., 5.]), array([ 2, 10, 10]), array([ 0, 24, 16]))</code></pre>
+</div>
+</div>
+<div id="372699ce" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>A.mean(axis<span class="op">=</span><span class="dv">1</span>), A.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), A.prod(axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="231">
+<pre><code>(array([1., 5., 5.]), array([ 2, 10, 10]), array([ 0, 24, 16]))</code></pre>
+</div>
+</div>
+<div id="d67d01f2" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>np.mean(A, axis<span class="op">=</span><span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="232">
+<pre><code>array([[4.66666667, 2.66666667]])</code></pre>
+</div>
+</div>
+<div id="888336fb" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>A.mean(axis<span class="op">=</span><span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="233">
+<pre><code>array([[4.66666667, 2.66666667]])</code></pre>
+</div>
+</div>
+<div id="dc88ece2" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">-</span> A.mean(axis<span class="op">=</span><span class="dv">0</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="234">
+<pre><code>array([[-2.66666667, -2.66666667],
+       [-0.66666667,  3.33333333],
+       [ 3.33333333, -0.66666667]])</code></pre>
+</div>
+</div>
+</section>
+<section id="multiplicação-de-matrizes" class="level2">
+<h2 class="anchored" data-anchor-id="multiplicação-de-matrizes">Multiplicação de Matrizes</h2>
+<p>Para matrizes <span class="math inline">\(\boldsymbol{X} \in \mathbb{R}^{a\times b}\)</span> e <span class="math inline">\(\boldsymbol{Y} \in \mathbb{R}^{b\times c}\)</span>, temos que <span class="math inline">\(\boldsymbol{XY} \in \mathbb{R}^{a\times c}\)</span>. No Numpy, essa operação é representada por <span class="math inline">\(\texttt{X @ Y}\)</span>.</p>
+<p>A multiplicação é definida por: <span class="math display">\[\begin{aligned}
+(\boldsymbol{XY})_{ij} = \sum_k \boldsymbol{X}_{ik}\boldsymbol{Y}_{kj}
+\end{aligned}\]</span></p>
+<div id="4fc6398b" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A <span class="op">@</span> B)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dimensão de A @ B:"</span>, (A<span class="op">@</span>B).shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 2  6]
+ [34 54]
+ [18 38]]
+Dimensão de A @ B: (3, 2)</code></pre>
+</div>
+</div>
+<p>Cuidado com as dimensões das matrizes:</p>
+<div id="8a1780bf" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    B <span class="op">@</span> A</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) (size 3 is different from 2)</code></pre>
+</div>
+</div>
+<div id="68330673" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A <span class="op">@</span> B <span class="op">@</span> v1)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((A <span class="op">@</span> B) <span class="op">@</span> v1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 28 332 204]
+[ 28 332 204]</code></pre>
+</div>
+</div>
+<section id="inversão-de-matrizes" class="level3">
+<h3 class="anchored" data-anchor-id="inversão-de-matrizes">Inversão de matrizes</h3>
+<p>Outra operação bastante comum é multiplicar uma matriz pela inversa dela…</p>
+<p>Seja <span class="math inline">\(\boldsymbol{B}\)</span> uma matriz inversível, então <span class="math inline">\(\boldsymbol{B}^{-1} \boldsymbol{B} = \boldsymbol{I}\)</span></p>
+<div id="5331db4d" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1 3]
+ [5 7]]</code></pre>
+</div>
+</div>
+<div id="04012d7e" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>B_inv <span class="op">=</span> np.linalg.inv(B)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B_inv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[-0.875  0.375]
+ [ 0.625 -0.125]]</code></pre>
+</div>
+</div>
+<div id="3b5b3e61" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B_inv <span class="op">@</span> B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 1.00000000e+00  4.44089210e-16]
+ [-1.11022302e-16  1.00000000e+00]]</code></pre>
+</div>
+</div>
+<p>A inversa pode ser usada no produto com vetores: <span class="math inline">\(\boldsymbol{B}^{-1} \boldsymbol{v}_1\)</span></p>
+<div id="f0f18955" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(B_inv <span class="op">@</span> v1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-3.25  2.75]</code></pre>
+</div>
+</div>
+<p>Porém, existe uma outra forma mais eficiente de computar a mesma coisa:</p>
+<p>Se <span class="math inline">\(\boldsymbol{B}^{-1} \boldsymbol{v}_1 = \boldsymbol{x}\)</span>, então <span class="math inline">\(\boldsymbol{B} \boldsymbol{x} = \boldsymbol{v}_1\)</span>. Ou seja, estamos resolvendo o sistema de equações lineares com coeficientes <span class="math inline">\(\boldsymbol{B}\)</span> e resultado <span class="math inline">\(\boldsymbol{v}_1\)</span></p>
+<div id="02078bbc" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.linalg.solve(B,v1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[-3.25  2.75]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="leitura-de-arquivos-com-dados" class="level2">
+<h2 class="anchored" data-anchor-id="leitura-de-arquivos-com-dados">Leitura de arquivos com dados</h2>
+<p>Normalmente os dados na disciplina serão recebidos no formato CSV. Isso significa que o dado é estruturado da seguinte maneira:</p>
+<pre><code>idade,pressão_sanguínea # Um cabeçalho opcional
+39,144 # Dados separados por vírgulas ou outro separador
+47,220
+....</code></pre>
+<div id="ac10ff7f" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>pressao_dataset <span class="op">=</span> np.genfromtxt(<span class="st">'./data/pressão.txt'</span>, delimiter<span class="op">=</span><span class="st">','</span>, skip_header<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>pressao_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="243">
+<pre><code>array([[ 39., 144.],
+       [ 47., 220.],
+       [ 45., 138.],
+       [ 47., 145.],
+       [ 65., 162.],
+       [ 46., 142.],
+       [ 67., 170.],
+       [ 42., 124.],
+       [ 67., 158.],
+       [ 56., 154.],
+       [ 64., 162.],
+       [ 56., 150.],
+       [ 59., 140.],
+       [ 34., 110.],
+       [ 42., 128.],
+       [ 48., 130.],
+       [ 45., 135.],
+       [ 17., 114.],
+       [ 20., 116.],
+       [ 19., 124.],
+       [ 36., 136.],
+       [ 50., 142.],
+       [ 39., 120.],
+       [ 21., 120.],
+       [ 44., 160.],
+       [ 53., 158.],
+       [ 63., 144.],
+       [ 29., 130.],
+       [ 25., 125.],
+       [ 69., 175.]])</code></pre>
+</div>
+</div>
+<pre><code># idade, temperatura da água, comprimento
+14,25,620
+28,25,1315
+....</code></pre>
+<div id="286370a5" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>peixe_dataset <span class="op">=</span> np.genfromtxt(<span class="st">'./data/peixe.txt'</span>, delimiter<span class="op">=</span><span class="st">','</span>)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>peixe_dataset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="244">
+<pre><code>array([[  14.,   25.,  620.],
+       [  28.,   25., 1315.],
+       [  41.,   25., 2120.],
+       [  55.,   25., 2600.],
+       [  69.,   25., 3110.],
+       [  83.,   25., 3535.],
+       [  97.,   25., 3935.],
+       [ 111.,   25., 4465.],
+       [ 125.,   25., 4530.],
+       [ 139.,   25., 4570.],
+       [ 153.,   25., 4600.],
+       [  14.,   27.,  625.],
+       [  28.,   27., 1215.],
+       [  41.,   27., 2110.],
+       [  55.,   27., 2805.],
+       [  69.,   27., 3255.],
+       [  83.,   27., 4015.],
+       [  97.,   27., 4315.],
+       [ 111.,   27., 4495.],
+       [ 125.,   27., 4535.],
+       [ 139.,   27., 4600.],
+       [ 153.,   27., 4600.],
+       [  14.,   29.,  590.],
+       [  28.,   29., 1305.],
+       [  41.,   29., 2140.],
+       [  55.,   29., 2890.],
+       [  69.,   29., 3920.],
+       [  83.,   29., 3920.],
+       [  97.,   29., 4515.],
+       [ 111.,   29., 4520.],
+       [ 125.,   29., 4525.],
+       [ 139.,   29., 4565.],
+       [ 153.,   29., 4566.],
+       [  14.,   31.,  590.],
+       [  28.,   31., 1205.],
+       [  41.,   31., 1915.],
+       [  55.,   31., 2140.],
+       [  69.,   31., 2710.],
+       [  83.,   31., 3020.],
+       [  97.,   31., 3030.],
+       [ 111.,   31., 3040.],
+       [ 125.,   31., 3180.],
+       [ 139.,   31., 3257.],
+       [ 153.,   31., 3214.]])</code></pre>
+</div>
+</div>
+</section>
+<section id="exercícios" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios">Exercícios</h2>
+<section id="computar-a-fórmula-da-normalização-escore-z" class="level3">
+<h3 class="anchored" data-anchor-id="computar-a-fórmula-da-normalização-escore-z">Computar a fórmula da normalização escore-Z</h3>
+<p>Dado um conjunto de dados <span class="math inline">\(\boldsymbol{X} = [\boldsymbol{x}_1, \boldsymbol{x}_1, \ldots, \boldsymbol{x}_N]\)</span>, a normalização por escore-Z é dada por: <span class="math display">\[\tilde{\boldsymbol{x_i}} = \frac{\boldsymbol{x_i} - \boldsymbol{\mu}}{\boldsymbol{\sigma}}\]</span></p>
+<p>Onde: <span class="math display">\[\begin{aligned}
+\boldsymbol{\mu} &amp;= \frac{1}{N}\sum_i^N \boldsymbol{x_i}\\
+\boldsymbol{\sigma} &amp;= \sqrt{\frac{1}{N-1}\sum_i^N (\boldsymbol{x_i}-\boldsymbol{\mu})^2}\\
+\end{aligned}\]</span></p>
+<p>A “desnormalização” pode ser feita por: <span class="math display">\[\boldsymbol{x_i} = \boldsymbol{\sigma}\tilde{\boldsymbol{x_i}} + \boldsymbol{\mu}\]</span></p>
+<p>Use a fórmula para normalizar o conjunto de dados <code>peixe</code> sem usar nenhum <code>for</code> ou <code>while</code>.</p>
+<div id="f191797c" class="cell" data-tags="[]" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escreva o código aqui</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> peixe_dataset.copy()</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>x_mean <span class="op">=</span> x.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> x.shape[<span class="dv">0</span>]</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>x_std <span class="op">=</span> np.sqrt(np.<span class="bu">sum</span>((x <span class="op">-</span> x_mean)<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>) <span class="op">/</span> (x.shape[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>x_norm <span class="op">=</span> (x <span class="op">-</span> x_mean) <span class="op">/</span> x_std</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>x_norm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="245">
+<pre><code>array([[-1.55384675, -1.32630725, -1.87170902],
+       [-1.23940207, -1.32630725, -1.34874483],
+       [-0.94741773, -1.32630725, -0.74300933],
+       [-0.63297305, -1.32630725, -0.38182543],
+       [-0.31852837, -1.32630725,  0.00193247],
+       [-0.0040837 , -1.32630725,  0.32173072],
+       [ 0.31036098, -1.32630725,  0.6227173 ],
+       [ 0.62480566, -1.32630725,  1.02152453],
+       [ 0.93925034, -1.32630725,  1.07043485],
+       [ 1.25369501, -1.32630725,  1.10053351],
+       [ 1.56813969, -1.32630725,  1.1231075 ],
+       [-1.55384675, -0.44210242, -1.86794669],
+       [-1.23940207, -0.44210242, -1.42399148],
+       [-0.94741773, -0.44210242, -0.75053399],
+       [-0.63297305, -0.44210242, -0.2275698 ],
+       [-0.31852837, -0.44210242,  0.11104011],
+       [-0.0040837 , -0.44210242,  0.68291462],
+       [ 0.31036098, -0.44210242,  0.90865456],
+       [ 0.62480566, -0.44210242,  1.04409852],
+       [ 0.93925034, -0.44210242,  1.07419718],
+       [ 1.25369501, -0.44210242,  1.1231075 ],
+       [ 1.56813969, -0.44210242,  1.1231075 ],
+       [-1.55384675,  0.44210242, -1.89428302],
+       [-1.23940207,  0.44210242, -1.3562695 ],
+       [-0.94741773,  0.44210242, -0.72796   ],
+       [-0.63297305,  0.44210242, -0.16361015],
+       [-0.31852837,  0.44210242,  0.61143031],
+       [-0.0040837 ,  0.44210242,  0.61143031],
+       [ 0.31036098,  0.44210242,  1.05914785],
+       [ 0.62480566,  0.44210242,  1.06291018],
+       [ 0.93925034,  0.44210242,  1.06667252],
+       [ 1.25369501,  0.44210242,  1.09677117],
+       [ 1.56813969,  0.44210242,  1.09752364],
+       [-1.55384675,  1.32630725, -1.89428302],
+       [-1.23940207,  1.32630725, -1.43151614],
+       [-0.94741773,  1.32630725, -0.89726495],
+       [-0.63297305,  1.32630725, -0.72796   ],
+       [-0.31852837,  1.32630725, -0.29905411],
+       [-0.0040837 ,  1.32630725, -0.06578951],
+       [ 0.31036098,  1.32630725, -0.05826485],
+       [ 0.62480566,  1.32630725, -0.05074018],
+       [ 0.93925034,  1.32630725,  0.05460512],
+       [ 1.25369501,  1.32630725,  0.11254504],
+       [ 1.56813969,  1.32630725,  0.08018898]])</code></pre>
+</div>
+</div>
+</section>
+<section id="encontrar-raízes-de-funções" class="level3">
+<h3 class="anchored" data-anchor-id="encontrar-raízes-de-funções">Encontrar raízes de funções</h3>
+<p>Dada uma função <span class="math inline">\(f\)</span>, o seguinte procedimento (método de Newton-Raphson) consegue encontrar aproximar zeros desta função:</p>
+<ol type="1">
+<li>Inicialize <span class="math inline">\(\tilde{x}_0\)</span> com um chute inicial e escolha uma tolerância <span class="math inline">\(\epsilon\)</span>;</li>
+<li>Compute: <span class="math display">\[\tilde{x}_{t} = \tilde{x}_{t-1} - \frac{f(\tilde{x}_{t-1})}{f'(\tilde{x}_{t-1})}\]</span></li>
+<li>Repita o passo 2 até que <span class="math inline">\(f(\tilde{x}_t) \leq \epsilon\)</span>.</li>
+</ol>
+<p>Implemente esse procedimento para <span class="math inline">\(f(x) = x^2 - 2\)</span>, teste seu resultado computando <span class="math inline">\(\tilde{x} \cdot \tilde{x}\)</span>.</p>
+<div id="095c200f" class="cell" data-tags="[]" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escreva o código aqui</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> funcao (x):</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> <span class="dv">2</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> derivada_funcao (x):</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">2</span><span class="op">*</span>x</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> newton (i):</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>  x_ant <span class="op">=</span> i</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>  x_novo <span class="op">=</span> x_ant <span class="op">-</span> [funcao(x_ant) <span class="op">/</span> derivada_funcao(x_ant)]</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> x_novo</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> teste (x1,x2):</span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x1<span class="op">*</span>x2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="regressão-linear-via-mínimos-quadrados-ordinários-ols" class="level1">
+<h1>Regressão linear via mínimos quadrados ordinários (OLS)</h1>
+<p>Como visto na aula de regressão linear, dado o seguinte problema: <span class="math display">\[\begin{aligned}
+\hat{\boldsymbol{y}} = \boldsymbol{X}\boldsymbol{w}\\
+\text{Queremos encontrar:}\\
+\hat{\boldsymbol{w}} = \arg\min_{\boldsymbol{w}} ||\boldsymbol{y} - \boldsymbol{X}\boldsymbol{w}||^2
+\end{aligned}\]</span></p>
+<p>Como visto, sabemos que: <span class="math display">\[\hat{\boldsymbol{w}} = (\boldsymbol{X}^{\top}\boldsymbol{X})^{-1} \boldsymbol{X}^{\top}\boldsymbol{y}\]</span></p>
+<p>Obtenha um modelo linear para predizer o comprimento de um peixe a partir de sua idade e da temperatura da água. Para isso, encontre o <span class="math inline">\(\hat{\boldsymbol{w}}\)</span> pro dataset <code>peixe</code> onde: <span class="math display">\[\boldsymbol{X} = [\mathbf{1}^{\top} \;,\; \mathtt{peixe\underline{}dataset[:,[0,1]}]\\
+\boldsymbol{y} = \mathtt{peixe\underline{}dataset[:,[2]]}\]</span></p>
+<p>Sem utilizar estrutura de repetição alguma, calcule a raíz do erro quadrático médio: <span class="math display">\[\mathrm{RMSE} = \sqrt{\frac{1}{n}\sum_i^n (\boldsymbol{y} - \hat{\boldsymbol{y}})^2}\]</span></p>
+<div id="020596b1" class="cell" data-tags="[]" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escreva o código aqui</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regressão-linear-via-gradiente-descendente-gd" class="level1">
+<h1>Regressão linear via gradiente descendente (GD)</h1>
+<p>Sendo <span class="math inline">\(\alpha\)</span> um passo de aprendizagem, <span class="math inline">\(N\)</span> o número de observações disponíveis e <span class="math inline">\(t\)</span> a iteração atual do algoritmo, os parâmetros <span class="math inline">\(\boldsymbol{w}\)</span> podem ser atualizados via algoritmo GD:</p>
+<p><span class="math display">\[\boldsymbol{w}(t) = \boldsymbol{w}(t-1) + \alpha \frac{1}{N}\sum_{i=1}^{N} e_i(t-1) \boldsymbol{x}_i,\]</span> <span class="math display">\[\text{em que } e_i(t-1) = y_i - \boldsymbol{w}^{\top}(t-1)\boldsymbol{x}_i\]</span></p>
+<p>Normalize os dados retirando a média e dividindo pelo desvio padrão (entrada e saída). Na predição, desfaça a normalização para computar o RMSE.</p>
+<div id="9acff45d" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escreva o código aqui</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regressão-linear-via-gradiente-descendente-estocástico-sgd" class="level1">
+<h1>Regressão linear via gradiente descendente estocástico (SGD)</h1>
+<p>Sendo <span class="math inline">\(\alpha\)</span> um passo de aprendizagem, <span class="math inline">\(N\)</span> o número de observações disponíveis e <span class="math inline">\(t\)</span> a iteração atual do algoritmo, os parâmetros <span class="math inline">\(\boldsymbol{w}\)</span> podem ser atualizados via algoritmo SGD:</p>
+<p><span class="math display">\[\boldsymbol{w}(t) = \boldsymbol{w}(t-1) + \alpha e_i(t-1) \boldsymbol{x}_i,\]</span> <span class="math display">\[\text{em que } e_i(t-1) = y_i - \boldsymbol{w}^{\top}(t-1)\boldsymbol{x}_i\]</span></p>
+<p>Normalize os dados retirando a média e dividindo pelo desvio padrão (entrada e saída). Na predição, desfaça a normalização para computar o RMSE.</p>
+<div id="7cf79ca7" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escreva o código aqui</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
