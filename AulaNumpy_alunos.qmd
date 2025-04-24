@@ -455,7 +455,8 @@ Implemente esse procedimento para $f(x) = x^2 - 2$, teste seu resultado computan
 ```{python}
 #| tags: []
 # Escreva o código aqui
-
+error = 0.0001
+x_inic = 2
 def funcao (x):
   return x**2 - 2
 
@@ -464,14 +465,17 @@ def derivada_funcao (x):
 
 def newton (i):
   x_ant = i
-  x_novo = x_ant - [funcao(x_ant) / derivada_funcao(x_ant)]
+  x_novo = x_ant - (funcao(x_ant) / derivada_funcao(x_ant))
   return x_novo
 
 def teste (x1,x2):
     return x1*x2 
 
+while abs(funcao(x_inic)) > error:
+    x_inic = newton(x_inic)
 
-
+print(f"Raiz aproximada: {x_inic}")
+print("Teste da raiz na funcao:",funcao(x_inic))
 ```
 
 # Regressão linear via mínimos quadrados ordinários (OLS)
@@ -495,7 +499,9 @@ $$\mathrm{RMSE} = \sqrt{\frac{1}{n}\sum_i^n (\boldsymbol{y} - \hat{\boldsymbol{y
 
 ```{python}
 #| tags: []
-# Escreva o código aqui
+# Escreva o código aqu
+
+
 ```
 
 # Regressão linear via gradiente descendente (GD)
