@@ -525,7 +525,7 @@ y = x[:, [2]]
 w_est = (np.linalg.inv(X.T @ X) @ X.T @ y)
 
 y_est = X @ w_est
-y.shape[0]
+
 
 def RMSE(y_real, y_est):
     return np.sqrt((np.sum(y_real - y_est)**2) / y.shape[0])
