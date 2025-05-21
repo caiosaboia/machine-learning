@@ -100,7 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Questao 1</h1>
 <section id="a-apresente-os-parâmetros-do-modelo-e-o-mse-erro-quadrático-médio-obtidos-pelo-algoritmo-ols-mínimos-quadrados-ordinários.-plote-a-reta-resultante-sobre-os-dados." class="level2">
 <h2 class="anchored" data-anchor-id="a-apresente-os-parâmetros-do-modelo-e-o-mse-erro-quadrático-médio-obtidos-pelo-algoritmo-ols-mínimos-quadrados-ordinários.-plote-a-reta-resultante-sobre-os-dados.">a) Apresente os parâmetros do modelo e o MSE (erro quadrático médio) obtidos pelo algoritmo OLS (mínimos quadrados ordinários). Plote a reta resultante sobre os dados.</h2>
-<div id="bbfb7276" class="cell" data-execution_count="1">
+<div id="0c653fab" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -127,7 +127,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </code></pre>
 </div>
 </div>
-<div id="9299d993" class="cell" data-execution_count="2">
+<div id="4af2a351" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, label<span class="op">=</span><span class="st">"Dados"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
@@ -143,7 +143,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </div>
 </div>
 </div>
-<div id="8f765fb2" class="cell" data-execution_count="3">
+<div id="69eb84d5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.c_[np.ones(x.shape[<span class="dv">0</span>]), x]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (np.linalg.inv(X.T <span class="op">@</span> X) <span class="op">@</span> X.T <span class="op">@</span> y)</span>
@@ -154,7 +154,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 <pre><code>Parâmetros encontrados: w0 = 0.0676, w1 = 1.5749</code></pre>
 </div>
 </div>
-<div id="f653db85" class="cell" data-execution_count="4">
+<div id="2d72fc06" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> MSE(y_real, y_est):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean((y_real <span class="op">-</span> y_est)<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -165,7 +165,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 <pre><code>0.21340090132936987</code></pre>
 </div>
 </div>
-<div id="022ac449" class="cell" data-execution_count="5">
+<div id="324a9fd9" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, label<span class="op">=</span><span class="st">"Dados"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_pred, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">"Reta OLS"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
@@ -185,7 +185,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </section>
 <section id="b-apresente-os-parâmetros-do-modelo-o-mse-e-a-curva-de-aprendizagem-obtidos-pelo-algoritmo-gd-gradiente-descendente.-plote-a-reta-resultante-sobre-os-dados." class="level2">
 <h2 class="anchored" data-anchor-id="b-apresente-os-parâmetros-do-modelo-o-mse-e-a-curva-de-aprendizagem-obtidos-pelo-algoritmo-gd-gradiente-descendente.-plote-a-reta-resultante-sobre-os-dados.">b) Apresente os parâmetros do modelo, o MSE e a curva de aprendizagem obtidos pelo algoritmo GD (gradiente descendente). Plote a reta resultante sobre os dados.</h2>
-<div id="ce1f93b9" class="cell" data-execution_count="6">
+<div id="2bab7daf" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gd(X, y, alpha<span class="op">=</span><span class="fl">0.1</span>, epochs<span class="op">=</span><span class="dv">100</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    m, n <span class="op">=</span> X.shape</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> np.zeros(n)</span>
@@ -209,7 +209,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 <pre><code>Parâmetros GD: w0 = 0.0676, w1 = 1.5739</code></pre>
 </div>
 </div>
-<div id="7be9c606" class="cell" data-execution_count="7">
+<div id="19a25d9f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y_pred_gd <span class="op">=</span> X <span class="op">@</span> w_gd</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MSE GD:"</span>, MSE(y, y_pred_gd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -217,7 +217,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 <pre><code>MSE GD: 0.21340123610268139</code></pre>
 </div>
 </div>
-<div id="2fa84820" class="cell" data-execution_count="8">
+<div id="26640c6f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, label<span class="op">=</span><span class="st">"Dados"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_pred_gd, color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">"Reta GD"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
@@ -234,7 +234,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </div>
 </div>
 </div>
-<div id="7e7e8f2f" class="cell" data-execution_count="9">
+<div id="3c78b68d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.plot(mse_gd)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Época"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"MSE"</span>)</span>
@@ -252,7 +252,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </section>
 <section id="c-apresente-os-parâmetros-do-modelo-o-mse-e-a-curva-de-aprendizagem-obtidos-pelo-algoritmo-sgd-gradiente-descendente-estocástico.-plote-a-reta-resultante-sobre-os-dados." class="level2">
 <h2 class="anchored" data-anchor-id="c-apresente-os-parâmetros-do-modelo-o-mse-e-a-curva-de-aprendizagem-obtidos-pelo-algoritmo-sgd-gradiente-descendente-estocástico.-plote-a-reta-resultante-sobre-os-dados.">c) Apresente os parâmetros do modelo, o MSE e a curva de aprendizagem obtidos pelo algoritmo SGD (gradiente descendente estocástico). Plote a reta resultante sobre os dados.</h2>
-<div id="7346f67f" class="cell" data-execution_count="10">
+<div id="63679be4" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sgd(X, y, alpha<span class="op">=</span><span class="fl">0.1</span>, epochs<span class="op">=</span><span class="dv">30</span>):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    m, n <span class="op">=</span> X.shape</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> np.zeros(n)</span>
@@ -276,23 +276,23 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w, mse_history</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4ebcad50" class="cell" data-execution_count="11">
+<div id="03ba7e20" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>w_sgd, mse_sgd <span class="op">=</span> sgd(X, y, alpha<span class="op">=</span><span class="fl">0.01</span>, epochs<span class="op">=</span><span class="dv">50</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>w0_sgd, w1_sgd <span class="op">=</span> w_sgd</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parâmetros SGD: w0 = </span><span class="sc">{</span>w0_sgd<span class="sc">:.4f}</span><span class="ss">, w1 = </span><span class="sc">{</span>w1_sgd<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Parâmetros SGD: w0 = 0.0638, w1 = 1.5795</code></pre>
+<pre><code>Parâmetros SGD: w0 = 0.0695, w1 = 1.5746</code></pre>
 </div>
 </div>
-<div id="e63f05d3" class="cell" data-execution_count="12">
+<div id="fb1cb934" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y_pred_sgd <span class="op">=</span> X <span class="op">@</span> w_sgd</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MSE SGD:"</span>, MSE(y, y_pred_sgd))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>MSE SGD: 0.213423185615565</code></pre>
+<pre><code>MSE SGD: 0.21340441016536543</code></pre>
 </div>
 </div>
-<div id="131b256c" class="cell" data-execution_count="13">
+<div id="528a8af8" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, label<span class="op">=</span><span class="st">"Dados"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x, y_pred_sgd, color<span class="op">=</span><span class="st">'purple'</span>, label<span class="op">=</span><span class="st">"Reta SGD"</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
@@ -309,7 +309,7 @@ y:[-2.08201726 -1.32698023 -1.10559772 -0.87394576 -0.28502695 -0.43115252
 </div>
 </div>
 </div>
-<div id="c877d7a7" class="cell" data-execution_count="14">
+<div id="de215508" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plt.plot(mse_sgd)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Época"</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"MSE"</span>)</span>
